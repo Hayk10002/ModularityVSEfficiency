@@ -7,4 +7,4 @@ set_property(TARGET main PROPERTY CXX_STANDARD 23)
 
 # Add the main executable as a test
 enable_testing()
-add_test(NAME MainTest COMMAND main 100000 1000)
+add_test(NAME MainTest COMMAND main 1000000 1000)

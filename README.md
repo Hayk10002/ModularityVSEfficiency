@@ -34,8 +34,8 @@ $ your/path/to/exe/main.exe {vector_size} {iteration_count}
 ## Possible Output
 
 ```
-Time not fused:   240ms
-Time     fused:    68ms
+Time not fused:   652ms
+Time     fused:   534ms
 ```
 
 ## How does this work

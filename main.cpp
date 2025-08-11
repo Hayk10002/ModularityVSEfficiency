@@ -18,25 +18,19 @@
     #define NO_INLINE /* noinline not supported */
     #endif
 
-    NO_INLINE std::vector<int> add(const std::vector<int>& a, const std::vector<int>& b)
+    NO_INLINE void add(std::vector<int>& a, const std::vector<int>& b)
     {
-        std::vector<int> res(a.size());
-        for (int i = 0; i < a.size(); i++) res[i] = a[i] + b[i];
-        return res;
+        for (int i = 0; i < a.size(); i++) a[i] += b[i];
     }
 
-    NO_INLINE std::vector<int> mult(const std::vector<int>& a, const std::vector<int>& b)
+    NO_INLINE void mult(std::vector<int>& a, const std::vector<int>& b)
     {
-        std::vector<int> res(a.size());
-        for (int i = 0; i < a.size(); i++) res[i] = a[i] * b[i];
-        return res;
+        for (int i = 0; i < a.size(); i++) a[i] *= b[i];
     }
 
-    NO_INLINE std::vector<int> mult_add(const std::vector<int>& a, const std::vector<int>& b, const std::vector<int>& c)
+    NO_INLINE void mult_add(std::vector<int>& a, const std::vector<int>& b, const std::vector<int>& c)
     {
-        std::vector<int> res(a.size());
-        for (int i = 0; i < a.size(); i++) res[i] = a[i] * b[i] + c[i];
-        return res;
+        for (int i = 0; i < a.size(); i++) a[i] = a[i] * b[i] + c[i];
     }
 
     // Random number from 0 to max-1 inclusive
@@ -71,16 +65,17 @@
 
         auto separate_time = time_ns([&]()
             {
-                res = add(mult(first, second), third);
-                x += res[getRandomNum(res.size() - 1)];
+                mult(first, second);
+                add(first, third);
+                x += first[getRandomNum(first.size() - 1)];
             },
             iter_count
         );
 
         auto fused_time = time_ns([&]()
             { 
-                res = mult_add(first, second, third);
-                x += res[getRandomNum(res.size() - 1)];
+                mult_add(first, second, third);
+                x += first[getRandomNum(first.size() - 1)];
             },
             iter_count
         );
